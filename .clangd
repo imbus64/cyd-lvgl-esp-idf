@@ -1,0 +1,14 @@
+CompileFlags:
+  CompilationDatabase: build
+  Add:
+    - -ferror-limit=0
+  Remove:
+    - -mlong-calls
+    - -mlongcalls
+    - -fstrict-volatile-bitfields
+    - -fno-shrink-wrap
+    - -fno-tree-switch-conversion
+Diagnostics:
+  Suppress:
+    - unknown_argument
+    - pp_file_not_found
