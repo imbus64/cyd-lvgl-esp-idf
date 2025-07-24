@@ -30,6 +30,7 @@ void lvgl_task(void *arg) {
     /* Create widgets */
     speedo = speedometer_create(scr, 0, 100);
     speedometer_set_value(speedo, 50);
+    animate_speedometer(speedo);
 
     lvgl_port_unlock();
 
