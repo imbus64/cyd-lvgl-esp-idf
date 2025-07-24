@@ -1,8 +1,8 @@
 BasedOnStyle: LLVM
-IndentWidth: 4                 # Use 4 spaces for indentation
-TabWidth: 4                    # Tab width is also 4 spaces
-UseTab: Never                  # Always use spaces instead of tabs
-ColumnLimit: 120                # Wrap lines after 80 characters
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 120
 AllowShortLoopsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: false
 AlwaysBreakTemplateDeclarations: true
