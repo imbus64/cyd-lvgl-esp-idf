@@ -68,7 +68,7 @@ void animate_speedometer(speedometer_t *spd) {
     lv_anim_init(&needle_anim);
     lv_anim_set_var(&needle_anim, spd);
     lv_anim_set_exec_cb(&needle_anim, speedo_anim_set_value_wrapper);
-    lv_anim_set_duration(&needle_anim, 3000);
+    lv_anim_set_duration(&needle_anim, 10000);
     lv_anim_set_repeat_count(&needle_anim, LV_ANIM_REPEAT_INFINITE);
     lv_anim_set_values(&needle_anim, 0, 2 * M_PI * 1000);
     lv_anim_start(&needle_anim);
