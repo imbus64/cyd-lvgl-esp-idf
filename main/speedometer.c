@@ -24,7 +24,6 @@ speedometer_t *speedometer_create(lv_obj_t *parent, int min, int max) {
     lv_obj_set_style_radius(spd->scale, LV_RADIUS_CIRCLE, 0);
 
     spd->needle = lv_line_create(spd->scale);
-
     lv_obj_set_style_line_width(spd->needle, 3, LV_PART_MAIN);
     lv_obj_set_style_line_rounded(spd->needle, true, LV_PART_MAIN);
     lv_obj_set_style_line_color(spd->needle, color_indicator, LV_PART_MAIN);
