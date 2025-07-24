@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include <string.h>
 
-static const char *TAG = "surgehud.c";
+static const char *TAG = "main.c";
 
 void app_main(void) {
     ESP_LOGI(TAG, "Entering Main");
