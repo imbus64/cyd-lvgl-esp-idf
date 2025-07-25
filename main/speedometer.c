@@ -55,7 +55,7 @@ static void speedo_anim_set_value_wrapper(void *obj, int32_t v) {
     speedometer_t *speedo = (speedometer_t *)obj;
     float          s = sinf((float)v / 1000.0f);
 
-    speedometer_set_value(speedo, 50.0f * (s + 1.0f));
+    speedometer_set_value(speedo, roundf(50.0f * (s + 1.0f)));
 }
 
 /**
