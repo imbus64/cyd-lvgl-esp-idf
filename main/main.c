@@ -32,7 +32,9 @@ void app_main(void) {
 
     ESP_ERROR_CHECK(lcd_display_brightness_set(100));
 
-    if (xTaskCreate(lvgl_task, "lvgl_task", 2 * 4096 * 2, NULL, 2, NULL) != pdPASS) {
+    ESP_ERROR_CHECK(lvgl_gui_setup());
+
+    if (xTaskCreatePinnedToCore(lvgl_gui_task, "lvgl_task", 2 * 4096 * 2, NULL, 2, NULL, 1) != pdPASS) {
         ESP_LOGE(TAG, "Failed to create task: %s", "lvgl_task");
     }
 

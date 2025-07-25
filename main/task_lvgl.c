@@ -16,7 +16,7 @@ static const char *TAG = "task_lvgl.c";
 
 static speedometer_t *speedo;
 
-void lvgl_task(void *arg) {
+esp_err_t lvgl_gui_setup(void) {
     ESP_LOGI(TAG, "Starting LVGL");
 
     lvgl_port_lock(0);
@@ -34,6 +34,10 @@ void lvgl_task(void *arg) {
 
     lvgl_port_unlock();
 
+    return ESP_OK;
+}
+
+void lvgl_gui_task(void *pvParams) {
     ESP_LOGI(TAG, "Entering Lvgl loop");
 
     TickType_t last_wake = xTaskGetTickCount();
@@ -43,5 +47,6 @@ void lvgl_task(void *arg) {
         vTaskDelayUntil(&last_wake, pdMS_TO_TICKS(1000 / 30));
     }
 
+    ESP_LOGI(TAG, "Lvgl gui task is exiting. This should not happen.");
     vTaskDelete(NULL);
 }
