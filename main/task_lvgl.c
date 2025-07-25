@@ -25,6 +25,11 @@ esp_err_t lvgl_gui_setup(void) {
     lv_obj_set_scrollbar_mode(scr, LV_SCROLLBAR_MODE_OFF);
 
     /* Create widgets */
+    /* A simple label to indicate git revision */
+    lv_obj_t *version_info = lv_label_create(scr);
+    lv_obj_align(version_info, LV_ALIGN_TOP_LEFT, 2, 2);
+    lv_label_set_text(version_info, BUILD_GIT_HASH);
+
     speedo = speedometer_create(scr, 0, 100);
     speedometer_set_value(speedo, 50);
     animate_speedometer(speedo);
