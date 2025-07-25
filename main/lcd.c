@@ -1,3 +1,6 @@
+#include <math.h>
+#include <stdio.h>
+
 #include <freertos/FreeRTOS.h>
 #include <freertos/event_groups.h>
 #include <freertos/semphr.h>
@@ -8,7 +11,6 @@
 #include <driver/spi_master.h>
 #include <esp_check.h>
 #include <esp_err.h>
-#include <esp_lcd_ili9341.h>
 #include <esp_lcd_panel_io.h>
 #include <esp_lcd_panel_ops.h>
 #include <esp_lcd_panel_vendor.h>
@@ -16,12 +18,16 @@
 #include <esp_system.h>
 #include <esp_timer.h>
 
+#ifdef CYD_ILI9341
+#include <esp_lcd_ili9341.h>
+#endif
+
 #include <esp_lvgl_port.h>
 #include <lvgl.h>
 
-#include "config.h"
+#include "hardware.h"
 
-static const char *TAG = "lcd.c";
+static const char *TAG = "lcd";
 
 esp_err_t lcd_display_brightness_init(void) {
     const ledc_channel_config_t LCD_backlight_channel = {
@@ -111,11 +117,19 @@ esp_err_t app_lcd_init(esp_lcd_panel_io_handle_t *lcd_io, esp_lcd_panel_handle_t
 
     const esp_lcd_panel_dev_config_t panel_config = {
         .reset_gpio_num = LCD_RESET,
+#ifdef CYD_ILI9341
+        .color_space = ESP_LCD_COLOR_SPACE_BGR,
+#else
         .color_space = ESP_LCD_COLOR_SPACE_RGB,
+#endif
         .bits_per_pixel = LCD_BITS_PIXEL,
     };
 
+#ifdef CYD_ILI9341
     esp_err_t r = esp_lcd_new_panel_ili9341(*lcd_io, &panel_config, lcd_panel);
+#else
+    esp_err_t r = esp_lcd_new_panel_st7789(*lcd_io, &panel_config, lcd_panel);
+#endif
 
     esp_lcd_panel_reset(*lcd_panel);
     esp_lcd_panel_init(*lcd_panel);
@@ -128,12 +142,7 @@ esp_err_t app_lcd_init(esp_lcd_panel_io_handle_t *lcd_io, esp_lcd_panel_handle_t
 
 lv_display_t *app_lvgl_init(esp_lcd_panel_io_handle_t lcd_io, esp_lcd_panel_handle_t lcd_panel) {
     const lvgl_port_cfg_t lvgl_cfg = {
-        .task_priority = 4,
-        .task_stack = 4096 * 2,
-        .task_affinity = -1,
-        .task_max_sleep_ms = 150,
-        .timer_period_ms = 5,
-    };
+        .task_priority = 4, .task_stack = 4096, .task_affinity = -1, .task_max_sleep_ms = 500, .timer_period_ms = 5};
 
     esp_err_t e = lvgl_port_init(&lvgl_cfg);
 
@@ -152,7 +161,6 @@ lv_display_t *app_lvgl_init(esp_lcd_panel_io_handle_t lcd_io, esp_lcd_panel_hand
         .hres = LCD_H_RES,
         .vres = LCD_V_RES,
         .monochrome = false,
-        .color_format = LV_COLOR_FORMAT_RGB565,
         .rotation =
             {
                 .swap_xy = false,
@@ -164,7 +172,6 @@ lv_display_t *app_lvgl_init(esp_lcd_panel_io_handle_t lcd_io, esp_lcd_panel_hand
                 .buff_dma = true,
                 .buff_spiram = false,
                 .swap_bytes = true,
-                .full_refresh = false,
             },
     };
 
