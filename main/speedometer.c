@@ -14,8 +14,6 @@ speedometer_t *speedometer_create(lv_obj_t *parent, int min, int max) {
 
     lv_color_t color_indicator = lv_color_make(0xFF, 0, 0);
 
-#define ANGLE_RANGE 140
-
     spd->scale = lv_scale_create(parent);
     lv_scale_set_range(spd->scale, min, max);
     lv_scale_set_angle_range(spd->scale, ANGLE_RANGE);

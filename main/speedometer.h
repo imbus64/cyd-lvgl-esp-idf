@@ -2,6 +2,8 @@
 #define SPEEDO_H
 #include "lvgl.h"
 
+#define ANGLE_RANGE 140
+
 typedef struct {
     lv_obj_t *scale;
     lv_obj_t *needle;
