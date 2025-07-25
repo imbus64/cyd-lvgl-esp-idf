@@ -1,6 +1,7 @@
 #include "speedometer.h"
 #include "core/lv_obj_style_gen.h"
 #include "misc/lv_area.h"
+#include "widgets/scale/lv_scale.h"
 #include <lvgl.h>
 #include <math.h>
 #include <stdio.h>
@@ -12,15 +13,16 @@ speedometer_t *speedometer_create(lv_obj_t *parent, int min, int max) {
         return NULL;
 
     lv_color_t color_indicator = lv_color_make(0xFF, 0, 0);
-    lv_color_t color_label = lv_color_make(0xFF, 0xFF, 0xFF);
+
+#define ANGLE_RANGE 140
 
     spd->scale = lv_scale_create(parent);
     lv_scale_set_range(spd->scale, min, max);
-    lv_scale_set_angle_range(spd->scale, 270);
-    lv_scale_set_rotation(spd->scale, 135);
+    lv_scale_set_angle_range(spd->scale, ANGLE_RANGE);
+    lv_scale_set_rotation(spd->scale, 270 - ANGLE_RANGE / 2);
     lv_scale_set_mode(spd->scale, LV_SCALE_MODE_ROUND_INNER);
-    lv_obj_set_size(spd->scale, 200, 200);
-    lv_obj_center(spd->scale);
+    lv_obj_set_size(spd->scale, 300, 300);
+    lv_obj_align(spd->scale, LV_ALIGN_TOP_MID, 0, LV_PCT(5));
     lv_obj_set_style_radius(spd->scale, LV_RADIUS_CIRCLE, 0);
 
     spd->needle = lv_line_create(spd->scale);
@@ -30,8 +32,7 @@ speedometer_t *speedometer_create(lv_obj_t *parent, int min, int max) {
 
     spd->label = lv_label_create(spd->scale);
     lv_obj_center(spd->label);
-    lv_obj_align(spd->label, LV_ALIGN_CENTER, 0, 35);
-    lv_obj_set_style_text_color(spd->label, color_label, 0);
+    lv_obj_align(spd->label, LV_ALIGN_CENTER, 0, -300 / 4);
     lv_label_set_text_fmt(spd->label, "%d", min);
 
     return spd;

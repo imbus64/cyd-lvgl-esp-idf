@@ -31,7 +31,7 @@ void app_main(void) {
     }
 
     ESP_ERROR_CHECK(lcd_display_brightness_set(100));
-
+    ESP_ERROR_CHECK(lcd_display_rotate(lvgl_display, LV_DISPLAY_ROTATION_90));
     ESP_ERROR_CHECK(lvgl_gui_setup());
 
     if (xTaskCreatePinnedToCore(lvgl_gui_task, "lvgl_task", 2 * 4096 * 2, NULL, 2, NULL, 1) != pdPASS) {

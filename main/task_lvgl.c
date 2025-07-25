@@ -22,10 +22,7 @@ esp_err_t lvgl_gui_setup(void) {
     lvgl_port_lock(0);
 
     lv_obj_t *scr = lv_screen_active();
-
-    /* Turn of the lights */
-    lv_color_t bg = lv_color_black();
-    lv_obj_set_style_bg_color(scr, bg, LV_PART_MAIN);
+    lv_obj_set_scrollbar_mode(scr, LV_SCROLLBAR_MODE_OFF);
 
     /* Create widgets */
     speedo = speedometer_create(scr, 0, 100);
