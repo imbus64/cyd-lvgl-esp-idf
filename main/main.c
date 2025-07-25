@@ -16,6 +16,7 @@ static const char *TAG = "main.c";
 
 void app_main(void) {
     ESP_LOGI(TAG, "Entering Main");
+    ESP_LOGI(TAG, "Git hash: %s\n", BUILD_GIT_HASH);
 
     static esp_lcd_panel_io_handle_t lcd_io;
     static esp_lcd_panel_handle_t    lcd_panel;
