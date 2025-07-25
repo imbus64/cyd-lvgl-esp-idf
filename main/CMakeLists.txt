@@ -1,4 +1,4 @@
-idf_component_register(SRCS "main.c" "task_lvgl.c" "lcd.c" "speedometer.c"
+idf_component_register(SRCS "main.c" "task_lvgl.c" "lcd.c" "speedometer.c" "touch.c"
     INCLUDE_DIRS ".")
 
 execute_process(
