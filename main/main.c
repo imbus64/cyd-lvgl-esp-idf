@@ -14,6 +14,15 @@
 
 static const char *TAG = "main.c";
 
+/* Used in conjunction with lv_obj_add_event_cb */
+void ui_event_screen(lv_event_t *e) {
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if (event_code == LV_EVENT_CLICKED) {
+        /* Clicked */
+    }
+}
+
 void app_main(void) {
     ESP_LOGI(TAG, "Entering Main");
     ESP_LOGI(TAG, "Git hash: %s\n", BUILD_GIT_HASH);
@@ -30,6 +39,16 @@ void app_main(void) {
         ESP_LOGI(TAG, "fatal error in app_lvgl_init");
         esp_restart();
     }
+
+#ifdef CYD_TOUCH
+    static esp_lcd_touch_handle_t tp;
+    static lvgl_port_touch_cfg_t  touch_cfg;
+
+    ESP_ERROR_CHECK(touch_init(&tp));
+    touch_cfg.disp = lvgl_display;
+    touch_cfg.handle = tp;
+    lvgl_port_add_touch(&touch_cfg);
+#endif
 
     ESP_ERROR_CHECK(lcd_display_brightness_set(100));
     ESP_ERROR_CHECK(lcd_display_rotate(lvgl_display, LV_DISPLAY_ROTATION_90));
